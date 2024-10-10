@@ -1,0 +1,43 @@
+1.Explain Group by and having by clause with example 
+Ans:
+
+	The GROUP BY clause groups rows that have the same values into summary rows, like "find the total salary for each department". It is often used with aggregate functions like COUNT(), SUM(), AVG(), MAX(), and MIN()
+	The HAVING clause is used to filter groups based on a condition. It is similar to the WHERE clause but is used with GROUP BY because WHERE cannot be used with aggregate functions
+
+2.Explain the difference between where clause and having clause
+Ans:
+	The WHERE and HAVING clauses in SQL are both used to filter records, but they serve different purposes and are used at different stages of query processing. Here’s a detailed explanation of the differences between the two:
+
+WHERE Clause
+Purpose: The WHERE clause is used to filter records before any grouping takes place.
+Usage: It is used to specify conditions on individual rows.
+Aggregate Functions: The WHERE clause cannot be used with aggregate functions like SUM(), COUNT(), AVG(), etc., directly.
+Position: The WHERE clause is placed before the GROUP BY clause in a SQL query.
+
+HAVING Clause
+Purpose: The HAVING clause is used to filter groups of records after the grouping has been done.
+Usage: It is used to specify conditions on groups created by the GROUP BY clause.
+Aggregate Functions: The HAVING clause can be used with aggregate functions.
+Position: The HAVING clause is placed after the GROUP BY clause in a SQL query.
+
+3.Fetch the department number if the department consists of at least 4 employees
+Ans:
+select empno from emp group by deptno having count(deptno)>=4;
+
+4.Fetch the total salary need to pay to all the employees in each department 
+Ans:
+
+select *,sal+comm as total_salary from emp;
+
+5.Query to show number of employees and average salary of each department
+Ans:
+select * ,count(empno) as no_of_emp, avg(sal) from emp group by deptno ;
+
+6.Query to show the salaries which is repeated
+Ans:
+select *,count(sal) from emp group by sal having count(sal)>1 ;
+
+7.Query to display max sal of each department if the if the max sal is more thann 1000
+Ans :
+select max(sal) from emp group by deptno having max(sal)>1000;
+

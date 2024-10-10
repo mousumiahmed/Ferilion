@@ -1,0 +1,20 @@
+1. Explain the difference between locate, position and instr
+2. Difference between substring and substring_index.
+3. Difference between concat, concat_ws and group_concat with example
+4. Difference between max and greatest, min and least with example
+5. Define the following with an example
+	coalesce
+	isnull
+	ifnull
+	nullif
+6. Define the following and write the syntax
+	Rank()
+	Dense_rank()
+	Row_number()
+	Nth_value()
+	First_value()
+	Ntile()
+7. Write a query to fetch the row_number along with the table records.
+8. write a query to fetch the rank of salaries in each department.
+9. Write a query to fetch the dense_rank of salaries in each department.
+11. Difference between Multirow functions and Single row Functions

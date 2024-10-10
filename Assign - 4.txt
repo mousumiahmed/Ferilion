@@ -1,0 +1,20 @@
+1. Replace all occurrences of 'Java' with 'Python' in the string 'Java is a programming language'.
+2. Trim the leading and trailing spaces from the string '   Hello, World!   '.
+3. Repeat the string 'OpenAI' three times.
+4. Reverse the string 'MySQL'.
+5. Insert the substring 'nice ' after the fifth character of the string 'Hello World'.
+6. Convert the string 'DATABASE' to lowercase.
+7. Convert the string 'programming LANGUAGE' to uppercase.
+8. Convert the mixed-case string 'OpenAI' to uppercase.
+9. Convert the lowercase string 'python' to uppercase.
+10. Convert the uppercase string 'MYSQL' to lowercase.
+11. Find the first three characters from the string 'Database'.
+12. Get the last four characters from the string 'Programming'.
+13. Extract the middle five characters from the string 'OpenAI'.
+14. Retrieve the leftmost four characters from the string 'Artificial'.
+15. Extract the rightmost seven characters from the string 'MachineLearning'.
+16. Combine the strings 'Open' and 'AI' into a single string.
+17. Join the strings 'apple', 'banana', and 'orange' with a space separator.
+18. Create a sentence by concatenating the strings 'My', 'name', 'is', and 'John'.
+19. Combine the strings 'SQL' and 'is' with a hyphen separator.
+20. Concatenate the strings 'Today is' and the current date.

@@ -1,0 +1,96 @@
+ Aggregate Functions
+1. MAX: What is the highest salary (`sal`) among all employees?
+2. MIN: What is the lowest salary (`sal`) in the `emp` table?
+3. AVG: What is the average salary (`sal`) of employees in department 30?
+4. SUM: What is the total salary (`sal`) for all employees in department 20?
+5. COUNT: How many employees are there in each department?
+6. JSON_ARRAYAGG: What is the JSON array of all employee names (`ename`) in department 10?
+7. JSON_OBJECTAGG: What is the JSON object with `empno` as keys and `ename` as values for employees in department 30?
+8. GROUP_CONCAT: What are the names (`ename`) of employees in department 20, concatenated into a single string?
+
+ Comparison Functions
+1. COALESCE: What is the salary (`sal`) of employees in department 20, showing 0 for employees with NULL salaries?
+2. GREATEST: What is the highest salary (`sal`) among the employees in departments 10 and 20?
+3. LEAST: What is the lowest salary (`sal`) among the employees in departments 30 and 40?
+4. ISNULL: What is the result when checking if the `comm` value for each employee is NULL?
+
+ Control Flow Functions
+1. CASE: Provide a list of employee names (`ename`) and their salary (`sal`), showing 'High' if the salary is greater than 2500 and 'Low' otherwise.
+2. IF: Show the name (`ename`) and salary (`sal`) of employees with a salary greater than 3000, and state 'High' if true, 'Not High' if false.
+3. IFNULL: Display the salary (`sal`) for employees, replacing NULL salaries with 1000.
+4. NULLIF: Show the salary (`sal`) for each employee, replacing salaries of 1000 with NULL.
+
+ String Functions
+1. SUBSTRING: Extract the first 3 characters of the employee names (`ename`).
+2. SUBSTRING_INDEX: Get the department names (`dname`) with only the first 3 characters.
+3. CONCAT_WS: Concatenate `ename` and `sal` of employees in department 10, separated by a hyphen (`-`).
+4. CONCAT: Combine `ename` and `job` for each employee into a single string.
+5. LOCATE: Find the position of 'A' in employee names (`ename`).
+6. INSERT: Insert 'XX' at the 2nd position of each employee name (`ename`).
+7. POSITION: Find the position of 'E' in the employee names (`ename`).
+8. REPLACE: Replace 'CLERK' with 'JUNIOR CLERK' in the job titles (`job`).
+9. REVERSE: Display the reversed employee names (`ename`).
+10. Extract Domain from Email: If there were an email column, how would you extract the domain part (e.g., example.com) from the email addresses?
+11. Get the First Character of Each Name: Extract the first character from each employee name (ename). (left)
+12. Replace Multiple Characters: Replace all occurrences of 'A' with 'X' and 'E' with 'Y' in employee names (ename).
+13. Reverse and Capitalize: Reverse the employee names (ename) and convert them to uppercase.
+14. Count Occurrences of a Character: Count how many times the character 'S' appears in each employee name (ename).
+
+
+
+
+ GROUP BY
+1. GROUP BY: Show the total salary (`sal`) for each department.
+2. GROUP BY with Multiple Columns: Display the total salary (`sal`) and average salary (`sal`) by job title (`job`) and department (`deptno`).
+3. Total and Average Salary by Job Title: Show the total salary (sal) and average salary (sal) for each job title (job), and include only job titles where the total salary exceeds 5000.
+4. Count and Maximum Salary by Department: List each department (deptno) along with the number of employees and the maximum salary (sal) in that department, and sort the results by the department number.
+5. Department with More Than Two Distinct Jobs: Find departments that have more than two distinct job titles (job).
+
+
+HAVING
+1. HAVING: List departments where the total salary (`sal`) is more than 5000.
+2. HAVING with Aggregation: Show departments where the number of employees is greater than 3 and the average salary is above 2000.
+3. HAVING with Multiple Conditions: List departments where the total salary is greater than 5000 and the maximum salary is less than 3000.
+4. Departments with High Salary Disparity: List departments where the difference between the highest and lowest salary (sal) is greater than 2000
+5. Departments with More Than One Employee Earning Above 3000: Find departments where more than one employee has a salary (sal) greater than 3000.
+6. Departments with High Average Salary and Low Employee Count: Show departments where the average salary (sal) is above 4000 but the number of employees is 3 or fewer.
+7. 
+
+WHERE Clause
+1. WHERE: Find all employees who have a salary greater than 2500.
+
+	SELECT ename, sal, AVG(sal) OVER (PARTITION BY deptno) AS avg_department_salary,
+       LEAD(AVG(sal) OVER (PARTITION BY deptno)) OVER (ORDER BY ename) AS next_avg_department_salary
+FROM emp;
+
+ORDER BY
+1. ORDER BY: List all employees sorted by their salary (`sal`) in descending order.
+2. ORDER BY with Multiple Columns: Sort employees first by department number (`deptno`) and then by salary (`sal`) in ascending order.
+
+
+Window Functions:
+1. Rank Employees by Salary: List employees (ename) and their salaries (sal), along with their rank based on salary in descending order. Use RANK to handle ties.
+2. Dense Rank of Employees by Salary: Provide the dense rank of employees based on their salary (sal), where ties receive the same rank and no ranks are skipped. Use DENSE_RANK.
+3. Row Number within Department: Assign a unique row number to employees within each department (deptno) ordered by salary (sal). Use ROW_NUMBER.
+4. Next Salary of Each Employee: Display each employee’s salary (sal) and the salary of the employee who comes immediately after them in the salary order using LEAD.
+5. Previous Salary of Each Employee: Show each employee’s salary (sal) and the salary of the employee who came immediately before them using LAG.
+6. Nth Highest Salary: Find the 3rd highest salary (sal) in the emp table using NTH_VALUE.
+	SELECT DISTINCT NTH_VALUE(sal, 3) OVER (ORDER BY sal DESC) AS third_highest_salary FROM emp;
+7. First Salary in Each Department: Show the first salary (sal) recorded in each department (deptno) using FIRST_VALUE.
+	SELECT deptno, ename, sal, FIRST_VALUE(sal) OVER (PARTITION BY deptno ORDER BY hiredate) AS first_salary FROM emp;
+8. Salary Distribution in Buckets: Divide employees into 4 equal groups based on their salary (sal) using NTILE.
+9. Rank Employees by Salary within Job Title: Provide the rank of employees within each job title (job) based on salary (sal), using RANK.
+10. Lag of Sales Commission for Salesmen: If there were a comm column representing commission, show each salesman’s commission (comm) and the commission of the previous salesman using LAG.
+	SELECT ename, comm, LAG(comm) OVER (PARTITION BY job ORDER BY hiredate) AS previous_commission
+	FROM emp
+	WHERE job = 'SALESMAN';
+11. Compare Each Employee’s Salary to the Average Salary: For each employee, show their salary (sal) compared to the average salary of their department using LEAD.
+	WITH department_avg AS (
+    SELECT deptno, AVG(sal) AS avg_department_salary
+    FROM emp
+    GROUP BY deptno
+	)
+	SELECT e.ename, e.sal, d.avg_department_salary,
+		   LEAD(d.avg_department_salary) OVER (ORDER BY e.ename) AS next_avg_department_salary
+	FROM emp e
+	JOIN department_avg d ON e.deptno = d.deptno;
